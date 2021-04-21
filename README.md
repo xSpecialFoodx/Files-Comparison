@@ -3,7 +3,7 @@ compares 2 files using a python script and lists the matches/differences in the 
 
 useful for binary comparisons
 
-comparing files in both normal/relative mode, might make a gui for it in the future.
+comparing files in both absolute/relative mode, might make a gui for it in the future.
 
 this is based on the repo of mine https://github.com/xSpecialFoodx/Difference-Checker
 
