@@ -208,7 +208,7 @@ def combine_comparisons(
     return result
 
 
-Debug = True
+Debug = False
 
 parser = MyParser(description='files comparison tool')
 
