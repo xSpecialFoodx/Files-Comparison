@@ -323,31 +323,6 @@ def main():
     if os.path.exists(output_file_path) and not os.path.isfile(output_file_path):
         parser.error('invalid output file: {0}'.format(output_file_path))
 
-    print(
-        "First File:" + ' ' + first_file_path + "\n"
-        + "Second File:" + ' ' + second_file_path + "\n"
-        + "Output:" + ' ' + output_file_path + "\n"
-        + "Dry Run:" + ' ' + ("True" if args.dry_run is True else "False") + "\n"
-        + "Verbose:" + ' ' + ("True" if args.verbose is True else "False") + "\n"
-        + "Files Comparison Type:" + ' ' + ("Relative" if args.files_comparison_type != "0" else "Absolute") + "\n"
-        + "Show Matches:" + ' ' + ("True" if args.show_matches is True else "False") + "\n"
-        + "Show Differences:" + ' ' + ("True" if args.hide_differences is False else "False") + "\n"
-        + "First File Data Start Location:" + ' ' + str(CheckHexText(int(args.first_file_data_start_location), AddressesLength, True)) + "\n"
-        + "First File Data End Location:" + ' ' + str(CheckHexText(int(args.first_file_data_end_location), AddressesLength, True)) + "\n"
-        + "Second File Data Start Location:" + ' ' + str(CheckHexText(int(args.second_file_data_start_location), AddressesLength, True)) + "\n"
-        + "Second File Data End Location:" + ' ' + str(CheckHexText(int(args.second_file_data_end_location), AddressesLength, True)) + "\n"
-        + "Files Data Offsets Max Absolute Differences:" + ' ' + args.files_data_offsets_max_absolute_differences + "\n"
-        + "Files Data Offsets Min Absolute Matches:" + ' ' + args.files_data_offsets_min_absolute_matches + "\n"
-        + "Files Data Offsets Max Relative Differences:" + ' ' + args.files_data_offsets_max_relative_differences + "\n"
-        + "Files Data Offsets Min Relative Matches:" + ' ' + args.files_data_offsets_min_relative_matches + "\n"
-        + "Files Data Offsets Min Resolution Difference Gain:" + ' ' + args.files_data_offsets_min_resolution_difference_gain + "\n"
-        + "Files Data Offsets Max Resolution Difference Gain:" + ' ' + args.files_data_offsets_max_resolution_difference_gain + "\n"
-        + "Files Data Offsets Max Resolution Difference Percentage Gain:" + ' ' + args.files_data_offsets_max_resolution_difference_percentage_gain + '%'
-    )
-
-    print("")
-    print('processing comparison result file: {0}'.format(output_file_path))
-
     files_comparison_type = (1 if args.files_comparison_type != "0" else 0)  # 1
 
     show_matches = (args.show_matches is True)
@@ -370,6 +345,31 @@ def main():
 
     if second_file_data_start_location > second_file_data_end_location:
         second_file_data_start_location = second_file_data_end_location
+
+    print(
+        "First File:" + ' ' + first_file_path + "\n"
+        + "Second File:" + ' ' + second_file_path + "\n"
+        + "Output:" + ' ' + output_file_path + "\n"
+        + "Dry Run:" + ' ' + ("True" if args.dry_run is True else "False") + "\n"
+        + "Verbose:" + ' ' + ("True" if args.verbose is True else "False") + "\n"
+        + "Files Comparison Type:" + ' ' + ("Relative" if args.files_comparison_type != "0" else "Absolute") + "\n"
+        + "Show Matches:" + ' ' + ("True" if args.show_matches is True else "False") + "\n"
+        + "Show Differences:" + ' ' + ("True" if args.hide_differences is False else "False") + "\n"
+        + "First File Data Start Location:" + ' ' + str(CheckHexText(first_file_data_start_location, AddressesLength, True)) + "\n"
+        + "First File Data End Location:" + ' ' + str(CheckHexText(first_file_data_end_location, AddressesLength, True)) + "\n"
+        + "Second File Data Start Location:" + ' ' + str(CheckHexText(second_file_data_start_location, AddressesLength, True)) + "\n"
+        + "Second File Data End Location:" + ' ' + str(CheckHexText(second_file_data_end_location, AddressesLength, True)) + "\n"
+        + "Files Data Offsets Max Absolute Differences:" + ' ' + args.files_data_offsets_max_absolute_differences + "\n"
+        + "Files Data Offsets Min Absolute Matches:" + ' ' + args.files_data_offsets_min_absolute_matches + "\n"
+        + "Files Data Offsets Max Relative Differences:" + ' ' + args.files_data_offsets_max_relative_differences + "\n"
+        + "Files Data Offsets Min Relative Matches:" + ' ' + args.files_data_offsets_min_relative_matches + "\n"
+        + "Files Data Offsets Min Resolution Difference Gain:" + ' ' + args.files_data_offsets_min_resolution_difference_gain + "\n"
+        + "Files Data Offsets Max Resolution Difference Gain:" + ' ' + args.files_data_offsets_max_resolution_difference_gain + "\n"
+        + "Files Data Offsets Max Resolution Difference Percentage Gain:" + ' ' + args.files_data_offsets_max_resolution_difference_percentage_gain + '%'
+    )
+
+    print("")
+    print('processing comparison result file: {0}'.format(output_file_path))
 
     files_data_offsets_max_absolute_differences = int(args.files_data_offsets_max_absolute_differences)  # 0
     files_data_offsets_min_absolute_matches = int(args.files_data_offsets_min_absolute_matches)  # 0
@@ -453,6 +453,9 @@ def main():
 
             if second_file_data_location > 0:
                 sf.seek(second_file_data_location, os.SEEK_CUR)
+
+            print("")
+            print('comparing files')
 
             while (
                 first_file_data_location <= first_file_data_end_location
@@ -1451,6 +1454,8 @@ def main():
                         (second_file_data_size - second_file_data_offset) * -1
                         , os.SEEK_CUR
                     )
+
+            print('finished comparing files')
 
     if matches_amount > 0:
         matches_sequences = combine_comparisons(matches, 0)
